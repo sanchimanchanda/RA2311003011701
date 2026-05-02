@@ -1,12 +1,3 @@
-/**
- * NotificationList Component
- * 
- * Renders a list of notification cards with:
- * - Empty state display
- * - Loading skeleton
- * - Animated transitions
- */
-
 'use client';
 
 import React from 'react';
@@ -25,7 +16,6 @@ interface NotificationListProps {
   emptyMessage?: string;
 }
 
-/** Loading skeleton for notification cards */
 function NotificationSkeleton() {
   return (
     <Box

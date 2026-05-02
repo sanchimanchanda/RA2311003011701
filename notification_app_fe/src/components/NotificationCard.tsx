@@ -1,14 +1,3 @@
-/**
- * NotificationCard Component
- * 
- * Displays a single notification with:
- * - Type badge with color coding
- * - Read/unread visual distinction
- * - Timestamp display
- * - Click to toggle read status
- * - Priority score (on priority page)
- */
-
 'use client';
 
 import React from 'react';
@@ -43,14 +32,12 @@ interface NotificationCardProps {
   showPriority?: boolean;
 }
 
-/** Icon map for notification types */
 const typeIcons: Record<NotificationType, React.ReactElement> = {
   Event: <EventIcon fontSize="small" />,
   Result: <ResultIcon fontSize="small" />,
   Placement: <PlacementIcon fontSize="small" />,
 };
 
-/** Format timestamp for display */
 function formatTimestamp(timestamp: string): string {
   try {
     const date = new Date(timestamp);

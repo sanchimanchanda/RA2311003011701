@@ -1,10 +1,3 @@
-/**
- * useReadStatus Hook
- * 
- * Manages read/unread state for notifications using localStorage.
- * Provides methods to mark notifications as read/unread and check status.
- */
-
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
@@ -13,25 +6,22 @@ import { logger } from '@/lib/logger';
 const STORAGE_KEY = 'campus_notifications_read_ids';
 
 interface UseReadStatusResult {
-  /** Set of notification IDs that have been read */
+  
   readIds: Set<string>;
-  /** Check if a notification has been read */
+  
   isRead: (id: string) => boolean;
-  /** Mark a notification as read */
+  
   markAsRead: (id: string) => void;
-  /** Mark a notification as unread */
+  
   markAsUnread: (id: string) => void;
-  /** Toggle read/unread status */
+  
   toggleReadStatus: (id: string) => void;
-  /** Mark all provided IDs as read */
+  
   markAllAsRead: (ids: string[]) => void;
-  /** Clear all read status */
+  
   clearAll: () => void;
 }
 
-/**
- * Load read IDs from localStorage.
- */
 function loadReadIds(): Set<string> {
   try {
     if (typeof window === 'undefined') return new Set();
@@ -44,9 +34,6 @@ function loadReadIds(): Set<string> {
   }
 }
 
-/**
- * Save read IDs to localStorage.
- */
 function saveReadIds(ids: Set<string>): void {
   try {
     if (typeof window === 'undefined') return;

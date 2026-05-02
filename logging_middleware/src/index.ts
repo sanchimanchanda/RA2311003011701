@@ -1,9 +1,3 @@
-/**
- * Logging Middleware - Public API
- * 
- * Re-exports all types and the Logger class for external consumption.
- */
-
 export { Logger, createLogger, createLogFunction } from './logger';
 export {
   LogStack,

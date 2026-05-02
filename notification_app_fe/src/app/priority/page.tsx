@@ -1,14 +1,3 @@
-/**
- * Priority Notifications Page
- * 
- * Displays Top N highest-priority unread notifications using
- * the Stage 1 priority engine (Min-Heap based).
- * 
- * Priority is determined by:
- * 1. Type weight: Placement > Result > Event
- * 2. Recency: Newer = higher priority
- */
-
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';

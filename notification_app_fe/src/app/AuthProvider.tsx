@@ -1,10 +1,3 @@
-/**
- * AuthProvider — Initializes authentication on app load.
- * 
- * Authenticates with the evaluation service and passes
- * the token to the logger for authenticated log delivery.
- */
-
 'use client';
 
 import React, { useEffect, useState } from 'react';

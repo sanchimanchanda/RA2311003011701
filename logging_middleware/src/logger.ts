@@ -1,15 +1,3 @@
-/**
- * Core Logger Implementation
- * 
- * Centralized logging utility that sends all log entries to the
- * evaluation service API. Supports both immediate and batched modes.
- * 
- * Usage:
- *   import { createLogger } from 'logging-middleware';
- *   const logger = createLogger({ baseUrl: '...', token: '...' });
- *   logger.log('frontend', 'info', 'api', 'Fetched notifications');
- */
-
 import {
   LogStack,
   LogLevel,
@@ -20,7 +8,6 @@ import {
   LOG_LEVEL_SEVERITY,
 } from './types';
 
-/** Default configuration values */
 const DEFAULTS = {
   MIN_LEVEL: 'debug' as LogLevel,
   BATCH_INTERVAL_MS: 5000,
@@ -28,12 +15,6 @@ const DEFAULTS = {
   LOG_ENDPOINT: '/evaluation-service/logs',
 } as const;
 
-/**
- * Logger class — the core of the logging middleware.
- * 
- * Provides a type-safe `log()` method that sends structured log entries
- * to the evaluation service. Supports batching to reduce network overhead.
- */
 export class Logger {
   private readonly config: Required<LoggerConfig>;
   private batch: LogEntry[] = [];
@@ -55,21 +36,10 @@ export class Logger {
     }
   }
 
-  /**
-   * Update the bearer token (e.g., after token refresh).
-   */
   public updateToken(token: string): void {
     (this.config as LoggerConfig).token = token;
   }
 
-  /**
-   * Primary log method.
-   * 
-   * @param stack - Application stack ('frontend')
-   * @param level - Severity level
-   * @param pkg - Source package/module
-   * @param message - Log message
-   */
   public log: LogFunction = (
     stack: LogStack,
     level: LogLevel,
@@ -99,9 +69,6 @@ export class Logger {
     }
   };
 
-  /**
-   * Convenience methods for each log level.
-   */
   public debug = (pkg: LogPackage, message: string): void =>
     this.log('frontend', 'debug', pkg, message);
 
@@ -117,9 +84,6 @@ export class Logger {
   public fatal = (pkg: LogPackage, message: string): void =>
     this.log('frontend', 'fatal', pkg, message);
 
-  /**
-   * Flush the batch queue immediately.
-   */
   public async flush(): Promise<void> {
     if (this.batch.length === 0 || this.isFlushing) return;
 
@@ -137,9 +101,6 @@ export class Logger {
     }
   }
 
-  /**
-   * Destroy the logger, flushing remaining logs and clearing timers.
-   */
   public async destroy(): Promise<void> {
     if (this.flushTimer) {
       clearInterval(this.flushTimer);
@@ -148,9 +109,6 @@ export class Logger {
     await this.flush();
   }
 
-  /**
-   * Send a single log entry to the evaluation service.
-   */
   private async sendLog(entry: LogEntry): Promise<void> {
     const url = `${this.config.baseUrl}${DEFAULTS.LOG_ENDPOINT}`;
 
@@ -174,9 +132,6 @@ export class Logger {
     }
   }
 
-  /**
-   * Start the periodic batch flush timer.
-   */
   private startBatchTimer(): void {
     this.flushTimer = setInterval(() => {
       this.flush();
@@ -184,22 +139,10 @@ export class Logger {
   }
 }
 
-/**
- * Factory function to create a configured Logger instance.
- * 
- * @param config - Logger configuration
- * @returns Configured Logger instance
- */
 export function createLogger(config: LoggerConfig): Logger {
   return new Logger(config);
 }
 
-/**
- * Standalone Log function matching the required signature:
- * Log(stack, level, package, message)
- * 
- * This requires a pre-configured logger instance.
- */
 export function createLogFunction(config: LoggerConfig): LogFunction {
   const logger = new Logger(config);
   return logger.log;

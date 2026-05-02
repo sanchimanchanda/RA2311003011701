@@ -1,9 +1,3 @@
-/**
- * API Route: POST /api/auth
- * 
- * Server-side proxy to the evaluation service auth endpoint.
- */
-
 import { NextRequest, NextResponse } from 'next/server';
 
 const BASE_URL = 'http://20.207.122.201/evaluation-service';

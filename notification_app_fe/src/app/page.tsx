@@ -1,13 +1,3 @@
-/**
- * All Notifications Page
- * 
- * Displays all notifications with:
- * - Pagination (limit, page)
- * - Type filtering (Event, Result, Placement)
- * - Read/unread visual distinction
- * - Mark as read/unread actions
- */
-
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';

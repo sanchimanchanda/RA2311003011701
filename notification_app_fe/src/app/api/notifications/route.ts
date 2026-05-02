@@ -1,10 +1,3 @@
-/**
- * API Route: GET /api/notifications
- * 
- * Server-side proxy to the evaluation service notifications endpoint.
- * Forwards query params and auth header.
- */
-
 import { NextRequest, NextResponse } from 'next/server';
 
 const BASE_URL = 'http://20.207.122.201/evaluation-service';

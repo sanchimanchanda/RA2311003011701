@@ -1,20 +1,9 @@
-/**
- * API Client
- * 
- * Centralized HTTP client for the evaluation service.
- * Handles auth headers, query params, and 401 retry logic.
- */
-
 import { getToken, invalidateToken } from './auth';
 import { Notification, NotificationsResponse, NotificationQueryParams } from './types';
 import { logger } from './logger';
 
 const BASE_URL = '/api';
 
-/**
- * Make an authenticated GET request to the evaluation service.
- * Automatically retries once on 401 (after refreshing the token).
- */
 async function authenticatedGet<T>(
   path: string,
   params?: Record<string, string | number | undefined>
@@ -69,13 +58,6 @@ async function authenticatedGet<T>(
   return data as T;
 }
 
-/**
- * Fetch notifications from the evaluation service.
- * Supports pagination and type filtering via query params.
- * 
- * @param params - Optional query parameters (limit, page, notification_type)
- * @returns Array of notifications
- */
 export async function fetchNotifications(
   params?: NotificationQueryParams
 ): Promise<Notification[]> {

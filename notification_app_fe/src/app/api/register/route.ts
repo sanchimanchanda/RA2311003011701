@@ -1,10 +1,3 @@
-/**
- * API Route: POST /api/register
- * 
- * Server-side proxy to the evaluation service registration endpoint.
- * Bypasses CORS by making the request from the server.
- */
-
 import { NextRequest, NextResponse } from 'next/server';
 
 const BASE_URL = 'http://20.207.122.201/evaluation-service';

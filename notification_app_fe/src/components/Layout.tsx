@@ -1,13 +1,3 @@
-/**
- * Layout Component
- * 
- * App-wide layout with:
- * - Glassmorphism AppBar with navigation
- * - Responsive sidebar on desktop
- * - Bottom navigation on mobile
- * - Animated gradient background
- */
-
 'use client';
 
 import React from 'react';

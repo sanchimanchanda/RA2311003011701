@@ -1,10 +1,3 @@
-/**
- * Root Layout
- * 
- * Configures MUI theme provider, CssBaseline, and the app layout.
- * Initializes auth on app load.
- */
-
 import type { Metadata } from 'next';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import ThemeRegistry from '@/app/ThemeRegistry';

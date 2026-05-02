@@ -1,9 +1,3 @@
-/**
- * ThemeRegistry — MUI + Next.js App Router Integration
- * 
- * Handles Emotion cache for SSR and provides MUI theme context.
- */
-
 'use client';
 
 import React from 'react';

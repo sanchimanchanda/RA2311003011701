@@ -1,12 +1,3 @@
-/**
- * PaginationControls Component
- * 
- * Provides pagination controls with:
- * - Page navigation
- * - Items per page selector
- * - Current page indicator
- */
-
 'use client';
 
 import React from 'react';

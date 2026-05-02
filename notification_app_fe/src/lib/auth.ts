@@ -1,21 +1,7 @@
-/**
- * Authentication Manager
- * 
- * Handles the complete auth flow:
- * 1. Register → get clientID + clientSecret (one-time, already done)
- * 2. Authenticate → get access_token
- * 3. Auto-refresh on token expiry
- * 
- * IMPORTANT: Field names are case-sensitive:
- * - clientID (NOT clientId)
- * - clientSecret (NOT client_secret)
- */
-
 import { logger } from './logger';
 
 const BASE_URL = '/api';
 
-/** Registered credentials (one-time registration already completed) */
 const REGISTERED_CREDENTIALS = {
   email: 'sm8280@srmist.edu.in',
   name: 'sanchi manchanda',
@@ -31,17 +17,11 @@ interface AuthResponse {
   expires_in: number;
 }
 
-/** Singleton state for token */
 let cachedToken: string | null = null;
 let tokenExpiresAt: number = 0;
 
-/**
- * Authenticate with the evaluation service.
- * Uses the pre-registered client credentials.
- * Returns an access token.
- */
 export async function authenticate(): Promise<string> {
-  // Return cached token if still valid (with 60s buffer)
+  
   if (cachedToken && Date.now() < (tokenExpiresAt * 1000) - 60000) {
     return cachedToken;
   }
@@ -69,16 +49,10 @@ export async function authenticate(): Promise<string> {
   return cachedToken;
 }
 
-/**
- * Get the current access token, authenticating if necessary.
- */
 export async function getToken(): Promise<string> {
   return authenticate();
 }
 
-/**
- * Force token refresh (e.g., after a 401 response).
- */
 export function invalidateToken(): void {
   cachedToken = null;
   tokenExpiresAt = 0;

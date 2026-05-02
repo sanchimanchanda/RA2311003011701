@@ -1,15 +1,7 @@
-/**
- * Material UI Theme Configuration
- * 
- * Premium dark theme with vibrant accent colors for the
- * Campus Notifications System.
- */
-
 'use client';
 
 import { createTheme, alpha } from '@mui/material/styles';
 
-/** Custom color palette */
 const palette = {
   primary: {
     main: '#6C63FF',
@@ -54,7 +46,6 @@ const palette = {
   divider: 'rgba(255, 255, 255, 0.08)',
 };
 
-/** Notification type colors */
 export const notificationTypeColors: Record<string, { bg: string; text: string; border: string }> = {
   Placement: {
     bg: alpha('#FF6B6B', 0.12),

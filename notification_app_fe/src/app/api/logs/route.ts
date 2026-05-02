@@ -1,15 +1,7 @@
-/**
- * API Route: POST /api/logs
- * 
- * Server-side proxy to the evaluation service logs endpoint.
- * Authenticates server-side so the client logger never needs a token.
- */
-
 import { NextRequest, NextResponse } from 'next/server';
 
 const BASE_URL = 'http://20.207.122.201/evaluation-service';
 
-/** Registered credentials for server-side auth */
 const CREDENTIALS = {
   email: 'sm8280@srmist.edu.in',
   name: 'sanchi manchanda',
@@ -19,15 +11,11 @@ const CREDENTIALS = {
   clientSecret: 'KCJnaHkvEhPBhrnD',
 };
 
-/** Cached server-side token */
 let serverToken: string | null = null;
 let serverTokenExpiresAt: number = 0;
 
-/**
- * Get a valid auth token server-side.
- */
 async function getServerToken(): Promise<string> {
-  // Return cached if still valid (60s buffer)
+  
   if (serverToken && Date.now() < (serverTokenExpiresAt * 1000) - 60000) {
     return serverToken;
   }

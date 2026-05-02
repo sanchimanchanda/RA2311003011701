@@ -1,13 +1,3 @@
-/**
- * useNotifications Hook
- * 
- * Fetches notifications from the API with support for:
- * - Pagination (limit, page)
- * - Type filtering
- * - Auto-refresh polling
- * - Loading and error states
- */
-
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -20,26 +10,26 @@ import {
 import { logger } from '@/lib/logger';
 
 interface UseNotificationsOptions {
-  /** Number of notifications per page */
+  
   limit?: number;
-  /** Current page number (1-indexed) */
+  
   page?: number;
-  /** Filter by notification type */
+  
   type?: NotificationType | null;
-  /** Auto-refresh interval in ms (0 to disable) */
+  
   pollInterval?: number;
 }
 
 interface UseNotificationsResult {
-  /** Array of notifications */
+  
   notifications: Notification[];
-  /** Whether the initial fetch is loading */
+  
   isLoading: boolean;
-  /** Error message if fetch failed */
+  
   error: string | null;
-  /** Refetch notifications manually */
+  
   refetch: () => Promise<void>;
-  /** Total count of fetched notifications */
+  
   totalCount: number;
 }
 

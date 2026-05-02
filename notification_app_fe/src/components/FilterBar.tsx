@@ -1,13 +1,3 @@
-/**
- * FilterBar Component
- * 
- * Provides type filtering with toggle buttons for:
- * - All notifications
- * - Event
- * - Result
- * - Placement
- */
-
 'use client';
 
 import React from 'react';

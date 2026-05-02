@@ -1,18 +1,3 @@
-/**
- * Priority Engine — Stage 1 Core Logic
- * 
- * Implements efficient Top-N priority notification retrieval
- * using a Min-Heap data structure.
- * 
- * Priority is determined by:
- * 1. Type Weight: Placement (3) > Result (2) > Event (1)
- * 2. Recency: Newer notifications rank higher within the same type
- * 
- * Complexity:
- * - Time:  O(N × log K) where N = total notifications, K = top count
- * - Space: O(K)
- */
-
 import {
   Notification,
   EnrichedNotification,
@@ -20,27 +5,13 @@ import {
   TYPE_WEIGHTS,
 } from './types';
 
-/**
- * Weight multiplier to ensure type always dominates over recency.
- * 10 billion ensures no timestamp can bridge the gap between types.
- */
 const WEIGHT_MULTIPLIER = 10_000_000_000;
 
-/**
- * Min-Heap node containing a notification and its priority score.
- */
 interface HeapNode {
   notification: Notification;
   score: number;
 }
 
-/**
- * Min-Heap implementation for efficient Top-N extraction.
- * 
- * The heap maintains the K highest-priority items seen so far.
- * The root is always the minimum element, so we can efficiently
- * check if a new element should replace it.
- */
 class MinHeap {
   private heap: HeapNode[] = [];
   private readonly capacity: number;
@@ -49,17 +20,14 @@ class MinHeap {
     this.capacity = capacity;
   }
 
-  /** Current number of elements in the heap */
   get size(): number {
     return this.heap.length;
   }
 
-  /** Peek at the minimum element without removing it */
   peekMin(): HeapNode | undefined {
     return this.heap[0];
   }
 
-  /** Insert a new element into the heap */
   push(node: HeapNode): void {
     if (this.heap.length < this.capacity) {
       this.heap.push(node);
@@ -71,14 +39,12 @@ class MinHeap {
     }
   }
 
-  /** Extract all elements sorted by descending priority */
   extractAllSorted(): HeapNode[] {
     const result = [...this.heap];
     result.sort((a, b) => b.score - a.score);
     return result;
   }
 
-  /** Bubble up element at index to restore heap property */
   private bubbleUp(index: number): void {
     while (index > 0) {
       const parentIndex = Math.floor((index - 1) / 2);
@@ -88,7 +54,6 @@ class MinHeap {
     }
   }
 
-  /** Sink down element at index to restore heap property */
   private sinkDown(index: number): void {
     const length = this.heap.length;
     while (true) {
@@ -108,39 +73,17 @@ class MinHeap {
     }
   }
 
-  /** Swap two elements in the heap */
   private swap(i: number, j: number): void {
     [this.heap[i], this.heap[j]] = [this.heap[j], this.heap[i]];
   }
 }
 
-/**
- * Calculate the priority score for a notification.
- * 
- * Score = TypeWeight × WEIGHT_MULTIPLIER + TimestampMs
- * 
- * This ensures strict type ordering (Placement > Result > Event)
- * with recency as the tiebreaker within the same type.
- * 
- * @param notification - The notification to score
- * @returns Priority score (higher = more important)
- */
 export function calculatePriorityScore(notification: Notification): number {
   const typeWeight = TYPE_WEIGHTS[notification.Type] || 1;
   const timestampMs = new Date(notification.Timestamp).getTime();
   return typeWeight * WEIGHT_MULTIPLIER + timestampMs;
 }
 
-/**
- * Get the Top N highest-priority unread notifications.
- * 
- * Uses a Min-Heap for O(N log K) performance.
- * 
- * @param notifications - All notifications from the API
- * @param n - Number of top notifications to return (default: 10)
- * @param readIds - Set of notification IDs that have been read
- * @returns Top N unread notifications sorted by priority (descending)
- */
 export function getTopNUnread(
   notifications: Notification[],
   n: number = 10,
@@ -164,13 +107,6 @@ export function getTopNUnread(
   }));
 }
 
-/**
- * Enrich all notifications with priority scores and read status.
- * 
- * @param notifications - Raw notifications from API
- * @param readIds - Set of read notification IDs
- * @returns Enriched notifications with priority scores
- */
 export function enrichNotifications(
   notifications: Notification[],
   readIds: Set<string> = new Set()
@@ -182,25 +118,12 @@ export function enrichNotifications(
   }));
 }
 
-/**
- * Sort notifications by priority (descending).
- * 
- * @param notifications - Enriched notifications
- * @returns Sorted notifications
- */
 export function sortByPriority(
   notifications: EnrichedNotification[]
 ): EnrichedNotification[] {
   return [...notifications].sort((a, b) => b.priorityScore - a.priorityScore);
 }
 
-/**
- * Filter notifications by type.
- * 
- * @param notifications - Notifications to filter
- * @param type - Type to filter by (or null for all)
- * @returns Filtered notifications
- */
 export function filterByType(
   notifications: Notification[],
   type: NotificationType | null
