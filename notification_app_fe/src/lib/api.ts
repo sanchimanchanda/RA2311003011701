@@ -93,7 +93,8 @@ export async function fetchNotifications(
     logger.info('api', `Fetched ${data.notifications?.length ?? 0} notifications`);
     return data.notifications || [];
   } catch (error) {
-    logger.error('api', `Failed to fetch notifications: ${error instanceof Error ? error.message : String(error)}`);
+    logger.error('api', `Failed to fetch notifications: ${error instanceof Error ? error.message : String(error)}
+`);
     throw error;
   }
 }
