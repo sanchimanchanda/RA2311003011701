@@ -1,5 +1,7 @@
 # Campus Notifications System - Placement Assignment
 
+**Live Demo**: [https://campusnotify.vercel.app/](https://campusnotify.vercel.app/)
+
 This is my submission for the frontend engineering placement round. It's a Campus Notifications System built with Next.js and Material UI that fetches, filters, and prioritizes different types of campus notifications (Events, Results, Placements).
 
 ## Features Built
