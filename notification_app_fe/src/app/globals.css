@@ -1,0 +1,21 @@
+/**
+ * Global CSS — minimal reset.
+ * MUI handles all styling through its theme system.
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
